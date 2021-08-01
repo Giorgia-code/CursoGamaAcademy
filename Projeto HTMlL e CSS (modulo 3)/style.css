@@ -1,0 +1,159 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  color: #c115ad;
+  font-family: 'Poppins', sans-serif;
+}
+
+ul {
+  list-style: none;
+  font-style: italic;
+}
+
+a {
+  text-decoration: none;
+  color: #55054c;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(90deg, #12c2e9, #c471ed, #f64f59);
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px;
+  box-shadow: 1px 1px 10px 1px #fff;
+  margin-bottom: 45px;
+}
+
+header img {
+  clip-path: circle();
+}
+
+header ul {
+  display: flex;
+}
+
+header ul li {
+  padding: 5px;
+}
+
+header ul li a {
+  transition: 300ms;
+}
+
+header ul li a:hover {
+  color: #08bce4;
+  text-decoration: underline;
+}
+
+.container {
+  text-align: center;
+}
+
+.container .name h1 {
+  font-size: 60px;
+}
+
+.container .name h5 {
+  font-size: 25px;
+}
+
+#animation {
+  font-size: 40px;
+  cursor: pointer;
+  animation: blink 1s steps(5, start) infinite;
+  transition: 300ms;
+}
+
+@keyframes blink {
+  to {
+    visibility: hidden;
+  }
+}
+
+.rotate {
+  transform: rotate(180deg);
+  transition: 300ms;
+}
+
+.active {
+  display: flex !important;
+}
+
+.about {
+  display: none;
+}
+
+.about div {
+  border: 1px solid #fff;
+  margin: 15px;
+  background-color: #fff;
+  flex-basis: 100%;
+}
+
+.about img {
+  max-width: 400px;
+  background-color: #cecece;
+}
+
+.form {
+  width: 40%;
+  margin: 0 auto;
+  border: thick double #fff;
+  padding: 25px;
+  margin-top: 30px;
+}
+
+.form input {
+  width: 50%;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px 0px 0px 5px;
+}
+
+.form button {
+  width: 15%;
+  padding: 5px 10px;
+  background: linear-gradient(to right, #12c2e9 50%, #c115ad 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  color: #464646;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 300ms ease-out;
+  border-radius: 0px 5px 5px 0px;
+  margin-top: 20px;
+  margin-left: -5px;
+}
+
+.form button:hover {
+  background-position: left bottom;
+  color: #464646;
+}
+
+@media only screen and (max-width: 768px) {
+  .form {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .container .name h1 {
+    font-size: 30px;
+  }
+
+  .container .name h5 {
+    font-size: 15px;
+  }
+
+  .about {
+    max-width: 80%;
+    text-align: justify;
+  }
+}

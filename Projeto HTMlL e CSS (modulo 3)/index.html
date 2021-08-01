@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.3/css/all.css"
+      integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,200&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Giórgia Maia</title>
+  </head>
+  <body>
+    <header>
+      <div>
+        <img src="Imagens/Logo.png" alt="Logo Giorgia Maia" />
+      </div>
+      <ul>
+        <li>
+          <a target="_blank" href="https://github.com/Giorgia-code">github</a>
+        </li>
+        <li>
+          <a target="_blank" href="https://mailto:g.isa.maia@hotmail.com"
+            >email</a
+          >
+        </li>
+        <li>
+          <a target="_blank" href="https://wa.me/+5516997521842">whatsapp</a>
+        </li>
+      </ul>
+    </header>
+    <main>
+      <section class="container">
+        <div class="name">
+          <h1>Giórgia Maia</h1>
+          <h5>Front-End Developer</h5>
+        </div>
+
+        <div onclick="displayAbout()" id="arrow">
+          <i id="animation" class="far fa-arrow-alt-circle-down"></i>
+        </div>
+
+        <div id="divAbout" class="about">
+          <div>
+            <p>É aqui que voce me encontra pessoalmente</p>
+            <img src="./Imagens/Araraquara.png" alt="Localizao Araraquara" />
+          </div>
+          <div>
+            <p>Minha experiencia com as tecnologias</p>
+            <img src="./Imagens/tecnologias.png" alt="Tecnologias" />
+          </div>
+          <div>
+            <p>Projetos realizados</p>
+            <img src="./Imagens/MacAxeIra.png" alt="Projeto site MacAxeIra" />
+            <p>Acesse pelo link abaixo:</p>
+            <a target="_blank" href="https://giorgia-code.github.io/MacAxeIra/"
+              >MacAxeIra</a
+            >
+          </div>
+        </div>
+
+        <div class="form">
+          <div>
+            <p>Vamos interagir!</p>
+          </div>
+          <form action="">
+            <input type="text" placeholder="Seu melhor email :)" />
+            <button>enviar!</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      function displayAbout() {
+        var arrow = document.getElementById('animation')
+        arrow.classList.toggle('rotate')
+        var divAbout = document.getElementById('divAbout')
+        divAbout.classList.toggle('active')
+      }
+    </script>
+  </body>
+</html>
