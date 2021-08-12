@@ -1,0 +1,33 @@
+// Incluindo uma biblioteca
+const http = require('http')
+const url = require('url') // peguei no site npmjs.com
+const queryString = require('query-string') // peguei no site npmjs.com
+
+// Definicao de endereco / URL
+const hostname = '127.0.0.1' //localhost
+const port = 3000
+
+// Implementacao da regra de negócio, onde está a lógica de programacao
+const server = http.createServer((req, res) => {
+  // Pegar a pergunta na url
+  const params = queryString.parse(url.parse(req.url, true).search)
+
+  // Verificar a pergunta e escolher uma resposta
+  let resposta
+  if (params.pergunta == 'melhor-filme') {
+    resposta = 'star wars'
+  } else if (params.pergunta == 'melhor-tecnologia-backend') {
+    resposta = 'nodejs'
+  } else {
+    resposta = 'nao sei, desculpe :('
+  }
+  // Retornar a resposta escolhida
+  res.statusCode = 200
+  res.setHeader('Content-Type', 'text/plain')
+  res.end(resposta)
+})
+
+// Execucao
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`)
+})
