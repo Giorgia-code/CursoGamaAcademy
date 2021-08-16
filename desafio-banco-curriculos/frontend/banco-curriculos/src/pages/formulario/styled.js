@@ -1,25 +1,65 @@
 import styled from 'styled-components'
 
-export const HomeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+export const Container = styled.div`
+  display: block;
   height: 100vh;
+  background-color: #00cdcd;
+`
+export const Title = styled.h1`
+  text-align: center;
+  font-size: 2rem;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
 `
 
 export const Content = styled.div`
-  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  width: 100%;
+`
+export const InputContent = styled.div`
+  flex: 1;
+`
+
+export const Label = styled.label`
+  display: block;
+`
+
+export const Select = styled.select`
+  border: 1px solid #ddd;
+  padding: 0 0.5rem;
+  border-radius: 0.25rem 0 0 0.25rem;
+  height: 50px;
+  width: 300px;
+  'Poppins', sans-serif;
+
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
 `
 
 export const Input = styled.input`
   border: 1px solid #ddd;
-  height: 1.5rem;
   padding: 0 0.5rem;
   border-radius: 0.25rem 0 0 0.25rem;
+  height: 50px;
+  width: 300px;
+  'Poppins', sans-serif;
+
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
+`
+export const InputGrande = styled.input`
+  border: 1px solid #ddd;
+  padding: 0 0.5rem;
+  border-radius: 0.25rem 0 0 0.25rem;
+  height: 50px;
+  width: 500px;
 
   &:focus,
   &:active {
@@ -28,11 +68,12 @@ export const Input = styled.input`
   }
 `
 export const Button = styled.button`
-  height: 1.5rem;
+  height: 5rem;
   border: 1px solid #000;
-  background: #000;
+  background: #008b8b;
   color: #fff;
   border-radius: 0 0.25rem 0.25rem 0;
+  cursor: pointer;
 
   &:focus,
   &:active {
@@ -40,10 +81,6 @@ export const Button = styled.button`
     box-shadow: none;
   }
 `
-export const ErrorMsg = styled.span`
-  display: block;
-  font-size: 0.65rem;
-  color: red;
-  font-weight: 600;
-  margin-top: 1rem;
+export const ContentButton = styled.div`
+  text-align: center;
 `
