@@ -5,14 +5,14 @@ import * as S from './styled'
 export default function Formulario() {
   const [nome, setNome] = useState('')
   const [cargo, setCargo] = useState('')
-  const [nascimento, setNascimento] = useState('')
+  const [dataNascimento, setDataNascimento] = useState('')
   const [estadoCivil, setEstadoCivil] = useState('')
   const [sexo, setSexo] = useState('')
-  const [endereco, setEndereco] = useState('')
+  const [logradouro, setLogradouro] = useState('')
   const [cep, setCep] = useState('')
   const [bairro, setBairro] = useState('')
   const [cidade, setCidade] = useState('')
-  const [estado, setEstado] = useState('')
+  const [uf, setUF] = useState('')
   const [telefoneFixo1, setTelefoneFixo1] = useState('')
   const [telefoneFixo2, setTelefoneFixo2] = useState('')
   const [celular, setCelular] = useState('')
@@ -28,27 +28,27 @@ export default function Formulario() {
     if (e.target.value.length === 8) {
       axios.get(`https://viacep.com.br/ws/${cep}/json/`).then(response => {
         const enderecoResponse = response.data
-        setEndereco(enderecoResponse.logradouro)
+        setLogradouro(enderecoResponse.logradouro)
         setBairro(enderecoResponse.bairro)
         setCidade(enderecoResponse.localidade)
-        setEstado(enderecoResponse.uf)
+        setUF(enderecoResponse.uf)
       })
     }
   }
 
   function handleEnviar() {
-    alert('enviar')
+    const headers = { 'Content-Type': 'application/json' }
     const json = JSON.stringify({
       nome,
       cargo,
-      nascimento,
+      dataNascimento,
       estadoCivil,
       sexo,
-      endereco,
+      logradouro,
       cep,
       bairro,
       cidade,
-      estado,
+      uf,
       telefoneFixo1,
       telefoneFixo2,
       celular,
@@ -59,7 +59,15 @@ export default function Formulario() {
       veiculo,
       habilitacao
     })
-    alert(json)
+
+    axios
+      .post('http://localhost:3030/candidatos', json, { headers: headers })
+      .then(response => {
+        console.log(response)
+        if (response.status !== 200) {
+          alert('Nao foi possivel completar seu cadastro')
+        }
+      })
   }
 
   return (
@@ -88,13 +96,13 @@ export default function Formulario() {
         </S.Content>
         <S.Content>
           <S.InputContent>
-            <S.Label htmlFor="nascimentoInput">Data de Nascimento*</S.Label>
+            <S.Label htmlFor="dataNascimentoInput">Data de Nascimento*</S.Label>
             <S.Input
-              className="nascimentoInput"
+              className="dataNascimentoInput"
               placeholder="ex: xx/xx/xxxx"
-              value={nascimento}
+              value={dataNascimento}
               required="*"
-              onChange={e => setNascimento(e.target.value)}
+              onChange={e => setDataNascimento(e.target.value)}
             />
           </S.InputContent>
           <S.InputContent>
@@ -122,13 +130,13 @@ export default function Formulario() {
         </S.Content>
         <S.Content>
           <S.InputContent>
-            <S.Label htmlFor="enderecoInput">Endereço*</S.Label>
+            <S.Label htmlFor="logradouroInput">Logradouro*</S.Label>
             <S.InputGrande
-              className="enderecoInput"
+              className="logradouroInput"
               placeholder="ex: Nome da Rua, 56. Bloco 2, Ap 301"
-              value={endereco}
+              value={logradouro}
               required="*"
-              onChange={e => setEndereco(e.target.value)}
+              onChange={e => setLogradouro(e.target.value)}
             />
           </S.InputContent>
           <S.InputContent>
@@ -162,12 +170,12 @@ export default function Formulario() {
             />
           </S.InputContent>
           <S.InputContent>
-            <S.Label htmlFor="estadoInput">Estado*</S.Label>
+            <S.Label htmlFor="ufInput">UF*</S.Label>
             <S.Input
-              className="estadoInput"
-              value={estado}
+              className="ufInput"
+              value={uf}
               required="*"
-              onChange={e => setEstado(e.target.value)}
+              onChange={e => setUF(e.target.value)}
             />
           </S.InputContent>
         </S.Content>
@@ -176,6 +184,7 @@ export default function Formulario() {
             <S.Label htmlFor="telefoneFixo1Input">Telefone Fixo 1</S.Label>
             <S.Input
               className="telefoneFixo1Input"
+              placeholder="Somente números"
               value={telefoneFixo1}
               onChange={e => setTelefoneFixo1(e.target.value)}
             />
@@ -184,6 +193,7 @@ export default function Formulario() {
             <S.Label htmlFor="telefoneFixo2Input">Telefone Fixo 2</S.Label>
             <S.Input
               className="telefoneFixo2Input"
+              placeholder="Somente números"
               value={telefoneFixo2}
               onChange={e => setTelefoneFixo2(e.target.value)}
             />
@@ -192,6 +202,7 @@ export default function Formulario() {
             <S.Label htmlFor="celularInput">Celular*</S.Label>
             <S.Input
               className="celularInput"
+              placeholder="Somente números"
               value={celular}
               required="*"
               onChange={e => setCelular(e.target.value)}
@@ -223,6 +234,7 @@ export default function Formulario() {
             <S.Label htmlFor="identidadeInput">Identidade</S.Label>
             <S.Input
               className="identidadeInput"
+              placeholder="Somente números"
               value={identidade}
               onChange={e => setIdentidade(e.target.value)}
             />
@@ -231,6 +243,7 @@ export default function Formulario() {
             <S.Label htmlFor="cpfInput">CPF*</S.Label>
             <S.Input
               className="cpfInput"
+              placeholder="Somente números"
               value={cpf}
               required="*"
               onChange={e => setCpf(e.target.value)}
