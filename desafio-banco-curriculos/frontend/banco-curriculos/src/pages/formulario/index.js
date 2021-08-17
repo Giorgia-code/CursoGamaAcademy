@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-// import { cpf } from 'cpf-cnpj-validator'
+import axios from 'axios'
 import * as S from './styled'
 
 export default function Formulario() {
   const [nome, setNome] = useState('')
   const [cargo, setCargo] = useState('')
   const [nascimento, setNascimento] = useState('')
-  const [endereço, setEndereço] = useState('')
+  const [estadoCivil, setEstadoCivil] = useState('')
+  const [sexo, setSexo] = useState('')
+  const [endereco, setEndereco] = useState('')
   const [cep, setCep] = useState('')
   const [bairro, setBairro] = useState('')
   const [cidade, setCidade] = useState('')
@@ -18,12 +20,51 @@ export default function Formulario() {
   const [email, setEmail] = useState('')
   const [identidade, setIdentidade] = useState('')
   const [cpf, setCpf] = useState('')
+  const [veiculo, setVeiculo] = useState('')
+  const [habilitacao, setHabilitacao] = useState('')
 
-  function handleEnviar() {}
+  function handleEnderecoPorCEP(e) {
+    console.log(e.target.value)
+    if (e.target.value.length === 8) {
+      axios.get(`https://viacep.com.br/ws/${cep}/json/`).then(response => {
+        const enderecoResponse = response.data
+        setEndereco(enderecoResponse.logradouro)
+        setBairro(enderecoResponse.bairro)
+        setCidade(enderecoResponse.localidade)
+        setEstado(enderecoResponse.uf)
+      })
+    }
+  }
+
+  function handleEnviar() {
+    alert('enviar')
+    const json = JSON.stringify({
+      nome,
+      cargo,
+      nascimento,
+      estadoCivil,
+      sexo,
+      endereco,
+      cep,
+      bairro,
+      cidade,
+      estado,
+      telefoneFixo1,
+      telefoneFixo2,
+      celular,
+      contato,
+      email,
+      identidade,
+      cpf,
+      veiculo,
+      habilitacao
+    })
+    alert(json)
+  }
 
   return (
     <S.Container>
-      <form>
+      <form onSubmit={handleEnviar}>
         <S.Title>Dados pessoais</S.Title>
         <S.Content>
           <S.InputContent>
@@ -58,7 +99,11 @@ export default function Formulario() {
           </S.InputContent>
           <S.InputContent>
             <S.Label htmlFor="estadocivilSelect">Estado Civil</S.Label>
-            <S.Select>
+            <S.Select
+              value={estadoCivil}
+              onChange={e => setEstadoCivil(e.target.value)}
+            >
+              <option value="selecione">Selecione</option>
               <option value="solteiro">Solteiro</option>
               <option value="casado">Casado</option>
               <option value="separado">Separado</option>
@@ -68,7 +113,8 @@ export default function Formulario() {
           </S.InputContent>
           <S.InputContent>
             <S.Label htmlFor="sexoSelect">Sexo</S.Label>
-            <S.Select>
+            <S.Select value={sexo} onChange={e => setSexo(e.target.value)}>
+              <option value="selecione">Selecione</option>
               <option value="masculino">Masculino</option>
               <option value="feminino">Feminino</option>
             </S.Select>
@@ -80,9 +126,9 @@ export default function Formulario() {
             <S.InputGrande
               className="enderecoInput"
               placeholder="ex: Nome da Rua, 56. Bloco 2, Ap 301"
-              value={endereço}
+              value={endereco}
               required="*"
-              onChange={e => setEndereço(e.target.value)}
+              onChange={e => setEndereco(e.target.value)}
             />
           </S.InputContent>
           <S.InputContent>
@@ -92,6 +138,7 @@ export default function Formulario() {
               value={cep}
               required="*"
               onChange={e => setCep(e.target.value)}
+              onBlur={handleEnderecoPorCEP}
             />
           </S.InputContent>
         </S.Content>
@@ -191,14 +238,22 @@ export default function Formulario() {
           </S.InputContent>
           <S.InputContent>
             <S.Label htmlFor="veiculoSelect">Possui veículo</S.Label>
-            <S.Select>
+            <S.Select
+              value={veiculo}
+              onChange={e => setVeiculo(e.target.value)}
+            >
+              <option value="selecione">Selecione</option>
               <option value="sim">Sim</option>
               <option value="não">Não</option>
             </S.Select>
           </S.InputContent>
           <S.InputContent>
             <S.Label htmlFor="habilitacaoSelect">Habilitação</S.Label>
-            <S.Select>
+            <S.Select
+              value={habilitacao}
+              onChange={e => setHabilitacao(e.target.value)}
+            >
+              <option value="selecione">Selecione</option>
               <option value="categoriaA">Categoria A</option>
               <option value="categoriaB">Categoria B</option>
               <option value="categoriaC">Categoria C</option>
@@ -209,9 +264,7 @@ export default function Formulario() {
           </S.InputContent>
         </S.Content>
         <S.ContentButton>
-          <S.Button type="submit" onClick={handleEnviar}>
-            Enviar
-          </S.Button>
+          <S.Button type="submit">Enviar</S.Button>
         </S.ContentButton>
       </form>
     </S.Container>
