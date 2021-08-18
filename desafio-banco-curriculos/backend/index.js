@@ -3,10 +3,14 @@ const express = require('express')
 var mysql = require('mysql2')
 const cors = require('cors')
 
+const swaggerUi = require('swagger-ui-express'),
+  swaggerDocument = require('./swagger.json')
+
 // Instancia o express
 const app = express()
 app.use(express.json())
 app.use(cors())
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Definicao de porta
 const port = 3030
@@ -45,35 +49,75 @@ app.post('/candidatos', (req, res) => {
     habilitacao
   } = req.body
 
-  const dia = dataNascimento.split('/')[0]
-  const mes = dataNascimento.split('/')[1]
-  const ano = dataNascimento.split('/')[2]
+  // Validacao do CPF
+  var sqlCandidatoCpf = ` SELECT cpf FROM sistema_candidatos.candidatos WHERE cpf = '${cpf}'`
+  connection.query(sqlCandidatoCpf, function (erro, rows) {
+    if (erro) {
+      return res.status(400).json(erro)
+    }
 
-  const candidato = {
-    nome,
-    cargo,
-    dataNascimento: new Date(ano, mes - 1, dia),
-    estadoCivil,
-    sexo,
-    telefoneFixo1,
-    telefoneFixo2,
-    celular,
-    contato,
-    email,
-    identidade,
-    cpf,
-    veiculo,
-    habilitacao
-  }
-  var sql = 'INSERT INTO candidatos SET ?'
-  connection.query(sql, candidato, function (erro, result) {
+    if (rows.length > 0) {
+      return res.status(422).json({ erro: 'Candidato já possui cadastro' })
+    }
+
+    const dia = dataNascimento.split('/')[0]
+    const mes = dataNascimento.split('/')[1]
+    const ano = dataNascimento.split('/')[2]
+
+    const candidato = {
+      nome,
+      cargo,
+      dataNascimento: new Date(ano, mes - 1, dia),
+      estadoCivil,
+      sexo,
+      telefoneFixo1,
+      telefoneFixo2,
+      celular,
+      contato,
+      email,
+      identidade,
+      cpf,
+      veiculo,
+      habilitacao
+    }
+
+    let idCandidato = 0
+
+    let endereco = {
+      logradouro,
+      cep,
+      bairro,
+      cidade,
+      uf,
+      idCandidato
+    }
+
+    InserirCandidato(candidato, endereco)
+
+    return res.json(candidato)
+  })
+})
+
+function InserirCandidato(candidato, endereco) {
+  var sqlCandidato = 'INSERT INTO candidatos SET ?'
+  connection.query(sqlCandidato, candidato, function (erro, result) {
     if (erro) {
       return res.status(400).json(erro)
     } else {
-      return res.json(candidato)
+      endereco.idCandidato = result.insertId
+      InserirEndereco(endereco)
     }
   })
-})
+}
+
+function InserirEndereco(endereco) {
+  var sqlEndereco = 'INSERT INTO endereco SET ?'
+  connection.query(sqlEndereco, endereco, function (erro) {
+    if (erro) {
+      return res.status(400).json(erro)
+    }
+  })
+}
 
 app.get('/', (req, res) => {
   res.send('Hello')

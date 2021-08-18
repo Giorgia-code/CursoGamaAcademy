@@ -143,6 +143,7 @@ export default function Formulario() {
             <S.Label htmlFor="cepInput">CEP*</S.Label>
             <S.Input
               className="cepInput"
+              placeholder="Somente números"
               value={cep}
               required="*"
               onChange={e => setCep(e.target.value)}
