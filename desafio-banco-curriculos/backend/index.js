@@ -2,6 +2,7 @@
 const express = require('express')
 var mysql = require('mysql2')
 const cors = require('cors')
+require('dotenv').config()
 
 const swaggerUi = require('swagger-ui-express'),
   swaggerDocument = require('./swagger.json')
@@ -17,10 +18,10 @@ const port = 3030
 
 // Abrindo conexao com base de dados
 var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'semsenhaGi',
-  database: 'sistema_candidatos'
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB
 })
 
 connection.connect()
